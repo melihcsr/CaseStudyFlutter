@@ -1,4 +1,6 @@
+import 'package:case_study/Models/UserModel.dart';
 import 'package:case_study/ViewModels/homeViewModel.dart';
+import 'package:case_study/Views/HomeView/home_view_components.dart';
 import 'package:case_study/Views/NfcView/nfc_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,13 +19,7 @@ class HomeView extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(255, 177, 104, 1),
-        title: Text(
-          "Katılımcı Listesi",
-          style: GoogleFonts.inter(
-              fontSize: 18.sp,
-              color: Colors.white,
-              fontWeight: FontWeight.w700),
-        ),
+        title: AppbarTitle(),
       ),
       body: userModelAsyncValue.when(
         data: (userModel) {
@@ -31,12 +27,9 @@ class HomeView extends ConsumerWidget {
             itemCount: userModel.data.length,
             itemBuilder: (context, index) {
               final user = userModel.data[index];
-              return ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(user.avatar),
-                ),
-                title: Text('${user.firstName} ${user.lastName}'),
-                subtitle: Text(user.email),
+              return Padding(
+                padding: EdgeInsets.only(top: index == 0 ? 16 : 8),
+                child: ListViewItem(user: user),
               );
             },
           );
@@ -47,14 +40,7 @@ class HomeView extends ConsumerWidget {
         )),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const NfcView()));
-        },
-        backgroundColor: Color.fromRGBO(255, 177, 104, 1),
-        child: Icon(Icons.nfc, color: Colors.white),
-      ),
+      floatingActionButton: FloatingButton(),
     );
   }
 }

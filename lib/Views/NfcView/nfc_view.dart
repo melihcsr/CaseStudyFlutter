@@ -1,5 +1,6 @@
 import 'package:case_study/ViewModels/nfcViewModel.dart';
 import 'package:case_study/Views/HomeView/home_view.dart';
+import 'package:case_study/Views/NfcView/nfc_view_components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,24 +28,8 @@ class _NfcViewState extends ConsumerState<NfcView> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(255, 177, 104, 1),
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Icon(
-            Icons.chevron_left,
-            color: Colors.white,
-            size: 40,
-          ),
-        ),
-        title: Text(
-          "Scan Your NFC",
-          style: GoogleFonts.inter(
-            fontSize: 18.sp,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
+        leading: NfcAppbarLeading(),
+        title: NfcAppbarTitle(),
       ),
       body: Column(
         children: [
