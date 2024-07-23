@@ -1,12 +1,12 @@
-import 'dart:convert';
 import 'package:case_study/Service/api_services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import "package:http/http.dart" as http;
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 final loginViewModelProvider =
     StateNotifierProvider<LoginViewModel, AsyncValue<Map<String, dynamic>>>(
-  (ref) => LoginViewModel(),
+  (ref) => LoginViewModel(ref),
 );
 
 final passwordVisibilityProvider =
@@ -14,16 +14,20 @@ final passwordVisibilityProvider =
   (ref) => PasswordVisibilityNotifier(),
 );
 
+final tokenProvider = StateProvider<String?>((ref) => null);
+
 class PasswordVisibilityNotifier extends StateNotifier<bool> {
-  PasswordVisibilityNotifier() : super(true); // Başlangıçta şifre gizlenmiş
+  PasswordVisibilityNotifier() : super(true);
 
   void toggleVisibility() {
-    state = !state; // Şifrenin gizlenme durumunu değiştirir
+    state = !state;
   }
 }
 
 class LoginViewModel extends StateNotifier<AsyncValue<Map<String, dynamic>>> {
-  LoginViewModel() : super(const AsyncData({}));
+  LoginViewModel(this.ref) : super(const AsyncData({}));
+
+  final Ref ref;
 
   Future<void> login(String email, String password) async {
     state = const AsyncLoading();
@@ -40,6 +44,9 @@ class LoginViewModel extends StateNotifier<AsyncValue<Map<String, dynamic>>> {
 
         // Token'ı güvenli bir şekilde sakla
         await SecureStorage.saveToken(token);
+
+        // Token provider'ını güncelle
+        ref.read(tokenProvider.notifier).state = token;
 
         // Başarı durumunda state güncellemesi
         state = AsyncData(responseData);
