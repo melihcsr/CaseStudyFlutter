@@ -39,12 +39,14 @@ class LoginTextFormField extends ConsumerWidget {
   final String leadingIcon;
   final bool obscureText;
   final TextEditingController controller;
+  final String? Function(String?) validator;
 
   LoginTextFormField({
     super.key,
     required this.leadingIcon,
     required this.obscureText,
     required this.controller,
+    required this.validator,
   });
 
   @override
@@ -54,65 +56,136 @@ class LoginTextFormField extends ConsumerWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: SizedBox(
-        height: 52.h,
-        child: TextFormField(
-          obscureText: isPasswordObscured && obscureText ? true : false,
-          controller: controller,
-          decoration: InputDecoration(
-            prefixIcon: InkWell(
-              child: Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: SvgPicture.asset(
-                  'assets/${leadingIcon}.svg',
-                  width: 24.w,
-                  height: 24.w,
-                  fit: BoxFit.contain,
+        height: 80.h,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              obscureText: isPasswordObscured && obscureText,
+              controller: controller,
+              validator: validator,
+              decoration: InputDecoration(
+                prefixIcon: InkWell(
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: SvgPicture.asset(
+                      'assets/$leadingIcon.svg',
+                      width: 24.w,
+                      height: 24.w,
+                      fit: BoxFit.contain,
+                    ),
+                  ),
+                ),
+                suffixIcon: obscureText
+                    ? GestureDetector(
+                        onTap: () {
+                          ref
+                              .read(passwordVisibilityProvider.notifier)
+                              .toggleVisibility();
+                        },
+                        child: Image.asset(
+                          "assets/eye.png",
+                          width: 24.w,
+                          height: 24.w,
+                        ),
+                      )
+                    : const SizedBox(),
+                hintText: obscureText ? "Password" : "Username",
+                hintStyle: GoogleFonts.inter(
+                  color: const Color.fromRGBO(71, 84, 103, 0.7),
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w400,
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(
+                    width: 1.w,
+                    color: const Color.fromRGBO(234, 236, 240, 1),
+                  ),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(
+                    width: 1.w,
+                    color: const Color.fromRGBO(234, 236, 240, 1),
+                  ),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(
+                    width: 1.w,
+                    color: Colors.red,
+                  ),
+                ),
+                focusedErrorBorder: OutlineInputBorder(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  borderSide: BorderSide(
+                    width: 1.w,
+                    color: Colors.red,
+                  ),
                 ),
               ),
             ),
-            suffixIcon: obscureText
-                ? GestureDetector(
-                    onTap: () {
-                      ref
-                          .read(passwordVisibilityProvider.notifier)
-                          .toggleVisibility();
-                    },
-                    child: Image.asset(
-                      "assets/eye.png",
-                      width: 24.w,
-                      height: 24.w,
-                    ),
-                  )
-                : SizedBox(),
-            hintText: obscureText ? "Password" : "Username",
-            hintStyle: GoogleFonts.inter(
-              color: const Color.fromRGBO(71, 84, 103, 0.7),
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w400,
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                width: 1.w,
-                color: const Color.fromRGBO(234, 236, 240, 1),
-              ),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                width: 1.w,
-                color: const Color.fromRGBO(234, 236, 240, 1),
-              ),
-            ),
-            border: OutlineInputBorder(
-              borderRadius: const BorderRadius.all(Radius.circular(8)),
-              borderSide: BorderSide(
-                width: 1.w,
-                color: const Color.fromRGBO(234, 236, 240, 1),
-              ),
-            ),
-          ),
+          ],
         ),
+      ),
+    );
+  }
+}
+
+class LoginForm extends StatefulWidget {
+  @override
+  _LoginFormState createState() => _LoginFormState();
+}
+
+class _LoginFormState extends State<LoginForm> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  String? _validateUsername(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Username cannot be empty';
+    }
+
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty';
+    }
+
+    return null;
+  }
+
+  void _submitForm() {
+    if (_formKey.currentState?.validate() ?? false) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      key: _formKey,
+      child: Column(
+        children: [
+          LoginTextFormField(
+            leadingIcon: 'username_icon',
+            obscureText: false,
+            controller: _usernameController,
+            validator: _validateUsername,
+          ),
+          LoginTextFormField(
+            leadingIcon: 'password_icon',
+            obscureText: true,
+            controller: _passwordController,
+            validator: _validatePassword,
+          ),
+          ElevatedButton(
+            onPressed: _submitForm,
+            child: const Text('Login'),
+          ),
+        ],
       ),
     );
   }

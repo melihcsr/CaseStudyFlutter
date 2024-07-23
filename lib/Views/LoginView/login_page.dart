@@ -1,10 +1,7 @@
-import 'dart:ui';
-
 import 'package:case_study/ViewModels/loginViewModel.dart';
 import 'package:case_study/Views/HomeView/home_view.dart';
 import 'package:case_study/Views/LoginView/login_view_components.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -42,9 +39,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             MaterialPageRoute(builder: (context) => const HomeView()),
           );
         },
-        loading: () {
-          // İsteğe bağlı: Yükleniyor durumunda bir şeyler yapabilirsiniz
-        },
+        loading: () {},
         error: (error, stackTrace) {
           Alert(
             context: context,
@@ -107,15 +102,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         leadingIcon: "mail-01",
                         obscureText: false,
                         controller: emailController,
+                        validator: _validateEmail,
                       ),
-                      SizedBox(height: 12.h),
                       LoginTextFormField(
                         leadingIcon: "key-01",
                         obscureText: true,
                         controller: passwordController,
+                        validator: _validatePassword,
                       ),
                       forgotYourPassword(context),
-                      SizedBox(height: 46.h),
+                      SizedBox(height: 24.h),
                       Padding(
                         padding: EdgeInsets.only(bottom: 16.h),
                         child: loginButton(
@@ -144,6 +140,22 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     );
   }
 
+  String? _validateEmail(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Email cannot be empty';
+    }
+    // Add more validation logic if needed
+    return null;
+  }
+
+  String? _validatePassword(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Password cannot be empty';
+    }
+    // Add more validation logic if needed
+    return null;
+  }
+
   Align loginButton(
       BuildContext context,
       TextEditingController emailController,
@@ -155,9 +167,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: GestureDetector(
           onTap: () {
-            final email = emailController.text;
-            final password = passwordController.text;
-            ref.read(loginViewModelProvider.notifier).login(email, password);
+            if (_formKey.currentState?.validate() ?? false) {
+              final email = emailController.text;
+              final password = passwordController.text;
+              ref.read(loginViewModelProvider.notifier).login(email, password);
+            }
           },
           child: Container(
             width: MediaQuery.of(context).size.width,

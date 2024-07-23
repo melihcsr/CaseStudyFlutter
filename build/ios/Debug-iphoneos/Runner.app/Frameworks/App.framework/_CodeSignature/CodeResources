@@ -10,19 +10,19 @@
 		</data>
 		<key>flutter_assets/AssetManifest.bin</key>
 		<data>
-		KbXnxAgz7svun7FZW13zXN8YirI=
+		uHHbu8jAu4QmSC5BmDEgKF8YopE=
 		</data>
 		<key>flutter_assets/AssetManifest.json</key>
 		<data>
-		OYOB6Gyx2JYwFFdMxVMV0HlxbWc=
+		tmhjqRybAJLF6YHRFDZEtaGJTaY=
 		</data>
 		<key>flutter_assets/FontManifest.json</key>
 		<data>
-		ytJnZUGBII6MNAfaiXdQ7zj6e2E=
+		vKJkVIcw+LGHFnKJGwrQwCREv68=
 		</data>
 		<key>flutter_assets/NOTICES.Z</key>
 		<data>
-		bfVzV4Gy+08h6Bo22FysbudqlVI=
+		ZEnHimRbZ33KOnwRrlPtH9GqrkE=
 		</data>
 		<key>flutter_assets/assets/eye.png</key>
 		<data>
@@ -58,7 +58,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		ITIxAQPSgERuM8pubv4N6sK6LJ4=
+		+RuU7l9SDnVxyStuwEhjWrT+VsE=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -124,10 +124,6 @@
 		<data>
 		/9DPzhL7XXo+eUZ88vKi0VCtoHM=
 		</data>
-		<key>flutter_assets/packages/simple_circular_progress_bar/fonts/Roboto-Regular.ttf</key>
-		<data>
-		VsXA04veTB8VSd2kPbN7CcYIqtM=
-		</data>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>
 		<data>
 		VoVnsu58hN7wrwazX0nyAopiB0Q=
@@ -143,28 +139,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			PqqNBYNalD0tsoTkOW2oXccODlMvPOJTizixTkazq1Y=
+			iiJ+froQ5tpRI3PTZFIthH26SCJ5z4Z9FyGwQ3yf6ho=
 			</data>
 		</dict>
 		<key>flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CjLePS8wXcsU+Qs1EhVUVP+XP37ehHY+B4oI5olKU/Q=
+			LRjW4tKdMrYc3XFLjeDaykOfqZfG2BJ4Rh/eXWEl2Y4=
 			</data>
 		</dict>
 		<key>flutter_assets/FontManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			umKUoh1r6uboJpVL4BEkYmpPGTdajUXFyvbruHGaBrg=
+			zX4DZFvESy3Ue3y2JvUcTsv1Whl6t3JBYotHrBZfviE=
 			</data>
 		</dict>
 		<key>flutter_assets/NOTICES.Z</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YnQ6T0ayIfrkMgw3kKRu8VkZheEEb/s+m/yXkMP+9yo=
+			l31sPL6SU4tyy8hoNj6ZLNR19ga5UjyIrulL24D+JXA=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/eye.png</key>
@@ -227,7 +223,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			SvTqg+Q/uTqLzOE6Svv9ormTAPr5tPrijB6DcITlcCg=
+			f12Sy2plcS9jPiVMsQ/a3zuKzP6sII8Tc9AFT7BGiXc=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -340,13 +336,6 @@
 			<key>hash2</key>
 			<data>
 			fx0y4CD5OBGrQgeHfZd41RMtRhtg546fNzkYpiSYwX4=
-			</data>
-		</dict>
-		<key>flutter_assets/packages/simple_circular_progress_bar/fonts/Roboto-Regular.ttf</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			ThR6tkuf322J0B9rjDygs83cWdYIqOIhj5olBLXJjhQ=
 			</data>
 		</dict>
 		<key>flutter_assets/shaders/ink_sparkle.frag</key>

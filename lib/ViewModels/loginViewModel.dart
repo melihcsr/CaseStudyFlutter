@@ -42,24 +42,17 @@ class LoginViewModel extends StateNotifier<AsyncValue<Map<String, dynamic>>> {
         final responseData = json.decode(response.body);
         final token = responseData['token'];
 
-        // Token'ı güvenli bir şekilde sakla
         await SecureStorage.saveToken(token);
 
-        // Token provider'ını güncelle
         ref.read(tokenProvider.notifier).state = token;
 
-        // Başarı durumunda state güncellemesi
         state = AsyncData(responseData);
       } else {
-        // API'den dönen hata mesajını işleyin
         final responseData = json.decode(response.body);
         final errorMessage = responseData['error'] ?? 'Failed to login';
-
-        // Hata durumunda state güncellemesi
         state = AsyncError(errorMessage, StackTrace.current);
       }
     } catch (e) {
-      // Genel hata durumunda state güncellemesi
       state = AsyncError('An unexpected error occurred', StackTrace.current);
     }
   }

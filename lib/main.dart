@@ -1,4 +1,4 @@
-import 'dart:async'; // Import gerekebilir
+import 'dart:async';
 import 'package:case_study/Service/api_services.dart';
 import 'package:case_study/Views/HomeView/home_view.dart';
 import 'package:case_study/Views/LoginView/login_page.dart';
@@ -15,7 +15,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      child: MyApp(startingPage: LoginPage()),
+      child: MyApp(startingPage: token != null ? LoginPage() : LoginPage()),
     ),
   );
 }
@@ -32,9 +32,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+        theme: ThemeData(),
         home: startingPage,
         debugShowCheckedModeBanner: false,
       ),

@@ -27,10 +27,8 @@ class ApiService {
     final response = await http.get(Uri.parse('$_baseUrl?page=$page'));
 
     if (response.statusCode == 200) {
-      // If the server returns an OK response, parse the JSON
       return UserModel.fromJson(jsonDecode(response.body));
     } else {
-      // If the server does not return an OK response, throw an exception
       throw Exception('Failed to load user data');
     }
   }

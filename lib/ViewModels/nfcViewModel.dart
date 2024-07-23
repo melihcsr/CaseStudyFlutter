@@ -18,7 +18,6 @@ class NfcViewModel extends ChangeNotifier {
             String tagData = tag.data.toString();
             debugPrint('NFC Tag Detected: $tagData');
 
-            // Show dialog with tag data
             showDialog(
               context: context,
               builder: (BuildContext context) {
@@ -41,7 +40,6 @@ class NfcViewModel extends ChangeNotifier {
               },
             );
 
-            // Stop the NFC session
             NfcManager.instance.stopSession();
           },
         );
