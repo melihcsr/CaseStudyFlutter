@@ -1,3 +1,5 @@
+import 'package:case_study/Views/HomeView/home_view.dart';
+import 'package:case_study/Views/LoginView/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: NfcBottomSheetPage(),
+      home: LoginPage(),
     );
   }
 }
