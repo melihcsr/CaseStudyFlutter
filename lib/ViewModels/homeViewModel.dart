@@ -27,3 +27,23 @@ final homeViewModelProvider =
   final apiService = ref.watch(apiServiceProvider);
   return HomeViewModel(apiService);
 });
+
+
+
+
+
+ //Natıve Swift kodları ile nfc baglama kodlari.
+
+  // Future<void> _startNfcScan(BuildContext context) async {
+  //   const platform = MethodChannel('com.example/nfc');
+  //   try {
+  //     final String result = await platform.invokeMethod('startNfcScan');
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('NFC Tag Verisi: $result')),
+  //     );
+  //   } on PlatformException catch (e) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('NFC tarama hatası: ${e.message}')),
+  //     );
+  //   }
+  // }
