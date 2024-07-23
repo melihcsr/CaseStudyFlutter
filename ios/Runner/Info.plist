@@ -57,7 +57,6 @@
 	<key>com.apple.developer.nfc.readersession.formats</key>
 	<array>
     	<string>NDEF</string>
-		<string>ISO7816</string>
 	</array>
 	<key>NFCReaderUsageDescription</key>
 	<string>NFC özelliği kullanmak için izin verin.</string>

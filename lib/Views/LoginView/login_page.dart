@@ -1,7 +1,10 @@
+import 'dart:ui';
+
 import 'package:case_study/ViewModels/loginViewModel.dart';
 import 'package:case_study/Views/HomeView/home_view.dart';
 import 'package:case_study/Views/LoginView/login_view_components.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -27,39 +30,49 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final loginState = ref.watch(loginViewModelProvider);
 
     ref.listen<AsyncValue<Map<String, dynamic>>>(loginViewModelProvider,
         (previous, next) {
-      if (next is AsyncData) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeView()),
-        );
-      } else if (next is AsyncError) {
-        Alert(
-          context: context,
-          type: AlertType.error,
-          title: "Login Error",
-          desc: next.error.toString(),
-          buttons: [
-            DialogButton(
-              child: Text(
-                "OK",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-              onPressed: () => Navigator.pop(context),
-              width: 120,
-            )
-          ],
-        ).show();
-      }
+      next.when(
+        data: (data) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeView()),
+          );
+        },
+        loading: () {
+          // İsteğe bağlı: Yükleniyor durumunda bir şeyler yapabilirsiniz
+        },
+        error: (error, stackTrace) {
+          Alert(
+            context: context,
+            type: AlertType.error,
+            title: "Login Error",
+            style: AlertStyle(
+                descStyle: GoogleFonts.manrope(
+                    fontSize: 16.sp, fontWeight: FontWeight.w500),
+                titleStyle: GoogleFonts.manrope(
+                    color: Colors.red, fontWeight: FontWeight.bold)),
+            desc: error.toString(),
+            buttons: [
+              DialogButton(
+                child: Text(
+                  "OK",
+                  style: GoogleFonts.manrope(
+                      color: Colors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.bold),
+                ),
+                onPressed: () => Navigator.pop(context),
+                color: Color.fromRGBO(255, 177, 104, 1),
+                width: 120,
+              )
+            ],
+          ).show();
+        },
+      );
     });
 
     return Scaffold(
@@ -138,11 +151,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         padding: EdgeInsets.symmetric(horizontal: 16.w),
         child: GestureDetector(
           onTap: () {
-            final email = "eve.holt@reqres.in";
-            final password = "cityslicka";
-            ref
-                .read(loginViewModelProvider.notifier)
-                .login(email, password, context);
+            final email = emailController.text;
+            final password = passwordController.text;
+            ref.read(loginViewModelProvider.notifier).login(email, password);
           },
           child: Container(
             width: MediaQuery.of(context).size.width,

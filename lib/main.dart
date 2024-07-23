@@ -1,21 +1,34 @@
 import 'package:case_study/Views/HomeView/home_view.dart';
 import 'package:case_study/Views/LoginView/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // Riverpod importu
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter NFC Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return ProviderScope(
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        child: MaterialApp(
+          title: 'Flutter NFC Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: LoginPage(),
+        ),
       ),
-      home: LoginPage(),
     );
   }
 }

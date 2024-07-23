@@ -1,8 +1,9 @@
 import 'package:case_study/ViewModels/homeViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter/services.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -44,6 +45,27 @@ class HomeView extends ConsumerWidget {
         )),
         error: (error, stackTrace) => Center(child: Text('Error: $error')),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await _startNfcScan(context);
+        },
+        backgroundColor: Color.fromRGBO(255, 177, 104, 1),
+        child: Icon(Icons.nfc, color: Colors.white),
+      ),
     );
+  }
+
+  Future<void> _startNfcScan(BuildContext context) async {
+    const platform = MethodChannel('com.example/nfc');
+    try {
+      final String result = await platform.invokeMethod('startNfcScan');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('NFC Tag Verisi: $result')),
+      );
+    } on PlatformException catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('NFC tarama hatası: ${e.message}')),
+      );
+    }
   }
 }
