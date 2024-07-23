@@ -81,58 +81,62 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         onTap: () {
           FocusScope.of(context).unfocus();
         },
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Form(
-            key: _formKey,
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    backgroundPhoto(context),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w, top: 16.h),
-                      child: welcomeText(),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16.w, top: 4.h),
-                      child: subtitleText(),
-                    ),
-                    SizedBox(height: 32.h),
-                    LoginTextFormField(
-                      leadingIcon: "mail-01",
-                      obscureText: false,
-                      controller: emailController,
-                    ),
-                    SizedBox(height: 12.h),
-                    LoginTextFormField(
-                      leadingIcon: "key-01",
-                      obscureText: true,
-                      controller: passwordController,
-                    ),
-                    forgotYourPassword(context),
-                    SizedBox(height: 46.h),
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 16.h),
-                      child: loginButton(
-                        context,
-                        emailController,
-                        passwordController,
-                        loginState,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Form(
+              key: _formKey,
+              child: Stack(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 64),
+                      backgroundPhoto(context),
+                      SizedBox(height: MediaQuery.of(context).size.height / 10),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.w, top: 16.h),
+                        child: welcomeText(),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16.w, top: 4.h),
+                        child: subtitleText(),
+                      ),
+                      SizedBox(height: 32.h),
+                      LoginTextFormField(
+                        leadingIcon: "mail-01",
+                        obscureText: false,
+                        controller: emailController,
+                      ),
+                      SizedBox(height: 12.h),
+                      LoginTextFormField(
+                        leadingIcon: "key-01",
+                        obscureText: true,
+                        controller: passwordController,
+                      ),
+                      forgotYourPassword(context),
+                      SizedBox(height: 46.h),
+                      Padding(
+                        padding: EdgeInsets.only(bottom: 16.h),
+                        child: loginButton(
+                          context,
+                          emailController,
+                          passwordController,
+                          loginState,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 24.h),
+                      child: Center(
+                        child: logoRow(),
                       ),
                     ),
-                  ],
-                ),
-                SafeArea(
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 24.h),
-                    child: Center(
-                      child: logoRow(),
-                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -169,7 +173,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               child: loginState is AsyncLoading
                   ? CircularProgressIndicator(color: Colors.white)
                   : Text(
-                      "Giriş yap ->",
+                      "Login ->",
                       style: GoogleFonts.inter(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,

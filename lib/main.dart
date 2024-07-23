@@ -16,7 +16,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      child: MyApp(startingPage: HomeView()),
+      child: MyApp(startingPage: LoginPage()),
     ),
   );
 }
@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         home: startingPage,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

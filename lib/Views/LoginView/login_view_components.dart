@@ -12,13 +12,14 @@ SizedBox backgroundPhoto(BuildContext context) {
     child: Image.asset(
       "assets/login.png",
       fit: BoxFit.cover,
+      height: MediaQuery.of(context).size.height / 4,
     ),
   );
 }
 
 Text welcomeText() {
   return Text(
-    "Hoşgeldin 👋 ",
+    "Welcome 👋 ",
     style: GoogleFonts.inter(
         fontSize: 24.sp,
         fontWeight: FontWeight.w700,
@@ -27,9 +28,9 @@ Text welcomeText() {
 }
 
 Text subtitleText() {
-  return Text("Lütfen çalışan giriş bilgilerinizi girin.",
+  return Text("Please enter your employee login information.",
       style: GoogleFonts.inter(
-          fontSize: 14.sp,
+          fontSize: 13.sp,
           fontWeight: FontWeight.w500,
           color: const Color.fromRGBO(71, 84, 103, 0.7)));
 }
@@ -55,7 +56,7 @@ class LoginTextFormField extends ConsumerWidget {
       child: SizedBox(
         height: 52.h,
         child: TextFormField(
-          obscureText: isPasswordObscured,
+          obscureText: isPasswordObscured && obscureText ? true : false,
           controller: controller,
           decoration: InputDecoration(
             prefixIcon: InkWell(
@@ -83,7 +84,7 @@ class LoginTextFormField extends ConsumerWidget {
                     ),
                   )
                 : SizedBox(),
-            hintText: obscureText ? "Şifre" : "Kullanıcı Adı",
+            hintText: obscureText ? "Password" : "Username",
             hintStyle: GoogleFonts.inter(
               color: const Color.fromRGBO(71, 84, 103, 0.7),
               fontSize: 14.sp,
@@ -127,7 +128,7 @@ Align forgotYourPassword(BuildContext context) {
           ;
         },
         child: Text(
-          "Şifreni mi unuttun?",
+          "Forgot password?",
           style: GoogleFonts.inter(
               color: const Color.fromRGBO(255, 171, 110, 1),
               fontSize: 12.sp,
