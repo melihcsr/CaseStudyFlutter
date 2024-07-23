@@ -2,6 +2,7 @@ import 'dart:async'; // Import gerekebilir
 import 'package:case_study/Service/api_services.dart';
 import 'package:case_study/Views/HomeView/home_view.dart';
 import 'package:case_study/Views/LoginView/login_page.dart';
+import 'package:case_study/Views/NfcView/nfc_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // Riverpod importu
 import 'package:flutter/services.dart';

@@ -1,4 +1,5 @@
 import 'package:case_study/ViewModels/homeViewModel.dart';
+import 'package:case_study/Views/NfcView/nfc_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,8 @@ class HomeView extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          _startNFCReading();
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const NfcView()));
         },
         backgroundColor: Color.fromRGBO(255, 177, 104, 1),
         child: Icon(Icons.nfc, color: Colors.white),
@@ -70,7 +72,7 @@ class HomeView extends ConsumerWidget {
     }
   }
 
-  void _startNFCReading() async {
+  void _startNFCReading(BuildContext context) async {
     try {
       bool isAvailable = await NfcManager.instance.isAvailable();
 
@@ -83,8 +85,28 @@ class HomeView extends ConsumerWidget {
             NfcPollingOption.iso15693
           },
           onDiscovered: (NfcTag tag) async {
-            // Process NFC tag. When an NFC tag is discovered, print its data to the console.
-            debugPrint('NFC Tag Detected: ${tag.data}');
+            // Process NFC tag. When an NFC tag is discovered, show its data in a popup dialog.
+            String tagData = tag.data.toString();
+            debugPrint('NFC Tag Detected: $tagData');
+
+            // Show dialog with tag data
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: Text('NFC Tag Detected'),
+                  content: Text(tagData),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                );
+              },
+            );
 
             // Stop the NFC session
             NfcManager.instance.stopSession();
