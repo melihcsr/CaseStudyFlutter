@@ -9,6 +9,19 @@ final loginViewModelProvider =
   (ref) => LoginViewModel(),
 );
 
+final passwordVisibilityProvider =
+    StateNotifierProvider<PasswordVisibilityNotifier, bool>(
+  (ref) => PasswordVisibilityNotifier(),
+);
+
+class PasswordVisibilityNotifier extends StateNotifier<bool> {
+  PasswordVisibilityNotifier() : super(true); // Başlangıçta şifre gizlenmiş
+
+  void toggleVisibility() {
+    state = !state; // Şifrenin gizlenme durumunu değiştirir
+  }
+}
+
 class LoginViewModel extends StateNotifier<AsyncValue<Map<String, dynamic>>> {
   LoginViewModel() : super(const AsyncData({}));
 

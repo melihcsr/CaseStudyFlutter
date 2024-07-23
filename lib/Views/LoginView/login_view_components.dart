@@ -1,5 +1,6 @@
 import 'package:case_study/ViewModels/loginViewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -33,68 +34,83 @@ Text subtitleText() {
           color: const Color.fromRGBO(71, 84, 103, 0.7)));
 }
 
-class LoginTextFormField extends StatelessWidget {
-  String leadingIcon;
-  bool obscureText;
-  TextEditingController controller;
+class LoginTextFormField extends ConsumerWidget {
+  final String leadingIcon;
+  final bool obscureText;
+  final TextEditingController controller;
 
-  LoginTextFormField(
-      {super.key,
-      required this.leadingIcon,
-      required this.obscureText,
-      required this.controller});
+  LoginTextFormField({
+    super.key,
+    required this.leadingIcon,
+    required this.obscureText,
+    required this.controller,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isPasswordObscured = ref.watch(passwordVisibilityProvider);
+
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: SizedBox(
         height: 52.h,
         child: TextFormField(
-          obscureText: obscureText,
+          obscureText: isPasswordObscured,
           controller: controller,
           decoration: InputDecoration(
-              prefixIcon: InkWell(
-                child: Padding(
-                  padding: const EdgeInsets.all(14.0),
-                  child: SvgPicture.asset(
-                    'assets/${leadingIcon}.svg',
-                    width: 24.w,
-                    height: 24.w,
-                    fit: BoxFit.contain,
-                  ),
+            prefixIcon: InkWell(
+              child: Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: SvgPicture.asset(
+                  'assets/${leadingIcon}.svg',
+                  width: 24.w,
+                  height: 24.w,
+                  fit: BoxFit.contain,
                 ),
               ),
-              suffixIcon: obscureText
-                  ? GestureDetector(
-                      onTap: () {}, child: Image.asset("assets/eye.png"))
-                  : SizedBox(),
-              hintText: obscureText ? "Şifre" : "Kullanıcı Adı",
-              hintStyle: GoogleFonts.inter(
-                  color: const Color.fromRGBO(71, 84, 103, 0.7),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                borderSide: BorderSide(
-                  width: 1.w,
-                  color: const Color.fromRGBO(234, 236, 240, 1),
-                ),
+            ),
+            suffixIcon: obscureText
+                ? GestureDetector(
+                    onTap: () {
+                      ref
+                          .read(passwordVisibilityProvider.notifier)
+                          .toggleVisibility();
+                    },
+                    child: Image.asset(
+                      "assets/eye.png",
+                      width: 24.w,
+                      height: 24.w,
+                    ),
+                  )
+                : SizedBox(),
+            hintText: obscureText ? "Şifre" : "Kullanıcı Adı",
+            hintStyle: GoogleFonts.inter(
+              color: const Color.fromRGBO(71, 84, 103, 0.7),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w400,
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                width: 1.w,
+                color: const Color.fromRGBO(234, 236, 240, 1),
               ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                borderSide: BorderSide(
-                  width: 1.w,
-                  color: const Color.fromRGBO(234, 236, 240, 1),
-                ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                width: 1.w,
+                color: const Color.fromRGBO(234, 236, 240, 1),
               ),
-              border: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                borderSide: BorderSide(
-                  width: 1.w,
-                  color: const Color.fromRGBO(234, 236, 240, 1),
-                ),
-              )),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(8)),
+              borderSide: BorderSide(
+                width: 1.w,
+                color: const Color.fromRGBO(234, 236, 240, 1),
+              ),
+            ),
+          ),
         ),
       ),
     );

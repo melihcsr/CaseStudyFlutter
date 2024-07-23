@@ -38,7 +38,7 @@
 		</data>
 		<key>Modules/flutter_nfc_kit.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		uLmhihdP2E8PRBpO3DoCUYPeXvQ=
+		YarQIWmgCPnYg4Y5hkaqTE0BFVw=
 		</data>
 		<key>Modules/flutter_nfc_kit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
@@ -50,7 +50,7 @@
 		</data>
 		<key>Modules/flutter_nfc_kit.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		goiXl8NDFwIWQYDIv7w/HTldyYc=
+		Gm6jCod025bD2lKDHHfsspDxTB4=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -112,7 +112,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4+bzFkohRTs8laGxvR/9InFH9SekbpvZI9yMc8vuKNI=
+			6+fj92SUGAnyLOEuXwUeB4WHReCFfK5pejTzLxQzWsI=
 			</data>
 		</dict>
 		<key>Modules/flutter_nfc_kit.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
@@ -133,7 +133,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HCL4AYtk7alMNT2+estbCHnMv2ttZaJXlyHp/HMZsi4=
+			5hmY/k2CamxlN7UdeI/6Nl+RSijF7ahXq2vy+n3xAf4=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

@@ -1,3 +1,5 @@
+import 'dart:async'; // Import gerekebilir
+import 'package:case_study/Service/api_services.dart';
 import 'package:case_study/Views/HomeView/home_view.dart';
 import 'package:case_study/Views/LoginView/login_page.dart';
 import 'package:flutter/material.dart';
@@ -5,29 +7,36 @@ import 'package:flutter_riverpod/flutter_riverpod.dart'; // Riverpod importu
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized(); // WidgetsBinding başlat
+
+  // Token'ı SecureStorage'dan al
+  final token = await SecureStorage.getToken();
+
   runApp(
     ProviderScope(
-      child: MyApp(),
+      child: MyApp(startingPage: LoginPage()),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  final Widget startingPage;
+
+  const MyApp({super.key, required this.startingPage});
+
   @override
   Widget build(BuildContext context) {
-    return ProviderScope(
-      child: ScreenUtilInit(
-        designSize: const Size(375, 812),
-        minTextAdapt: true,
-        splitScreenMode: true,
-        child: MaterialApp(
-          title: 'Flutter NFC Demo',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          home: LoginPage(),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      child: MaterialApp(
+        title: 'Flutter NFC Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
         ),
+        home: startingPage,
       ),
     );
   }
