@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
+import 'package:nfc_manager/nfc_manager.dart';
 
 class HomeView extends ConsumerWidget {
   const HomeView({super.key});
@@ -47,7 +48,7 @@ class HomeView extends ConsumerWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await _startNfcScan(context);
+          _startNFCReading();
         },
         backgroundColor: Color.fromRGBO(255, 177, 104, 1),
         child: Icon(Icons.nfc, color: Colors.white),
@@ -66,6 +67,34 @@ class HomeView extends ConsumerWidget {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('NFC tarama hatası: ${e.message}')),
       );
+    }
+  }
+
+  void _startNFCReading() async {
+    try {
+      bool isAvailable = await NfcManager.instance.isAvailable();
+
+      // We first check if NFC is available on the device.
+      if (isAvailable) {
+        // If NFC is available, start an NFC session and listen for NFC tags to be discovered.
+        NfcManager.instance.startSession(
+          pollingOptions: {
+            NfcPollingOption.iso14443,
+            NfcPollingOption.iso15693
+          },
+          onDiscovered: (NfcTag tag) async {
+            // Process NFC tag. When an NFC tag is discovered, print its data to the console.
+            debugPrint('NFC Tag Detected: ${tag.data}');
+
+            // Stop the NFC session
+            NfcManager.instance.stopSession();
+          },
+        );
+      } else {
+        debugPrint('NFC not available.');
+      }
+    } catch (e) {
+      debugPrint('Error reading NFC: $e');
     }
   }
 }

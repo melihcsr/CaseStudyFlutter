@@ -15,7 +15,7 @@ void main() async {
 
   runApp(
     ProviderScope(
-      child: MyApp(startingPage: LoginPage()),
+      child: MyApp(startingPage: HomeView()),
     ),
   );
 }
